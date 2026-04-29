@@ -51,7 +51,8 @@ function NewsCard({ item, onCatch, duration }) {
     return () => cancelAnimationFrame(rafRef.current);
   }, [duration, screenH]);
 
-  const tap = () => {
+  const tap = (e) => {
+    e.stopPropagation();
     if (caught) return;
     setCaught(true);
     cancelAnimationFrame(rafRef.current);
@@ -59,7 +60,7 @@ function NewsCard({ item, onCatch, duration }) {
   };
 
   return (
-    <div onClick={tap} style={{
+    <div onPointerDown={tap} style={{
       position: "absolute", left: item.x, top: y, width: item.w,
       transform: `rotate(${item.rot + wobble}deg) scale(${caught ? 1.12 : 1})`,
       transition: caught ? "opacity 0.35s, transform 0.15s" : "transform 0.08s",
